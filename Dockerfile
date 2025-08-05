@@ -42,7 +42,8 @@ ENV PYTHONFAULTHANDLER=1
 
 RUN mkdir /config /downloads && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone && \
   apk add --update --no-cache bash mkvtoolnix patch aria2 coreutils curl shadow sqlite tzdata libmagic ffmpeg rtmpdump fribidi && \
-  useradd -u ${USER_ID:-1000} -U -d /app -s /bin/bash app && \
+  groupadd -g 10000 app && \
+  useradd -u 1000 -g 10000 -d /app -s /bin/bash app && \
   rm -rf /var/cache/apk/*
 
 COPY entrypoint.sh /
